@@ -1,0 +1,100 @@
+import assert from 'node:assert/strict';
+import { randomBytes } from 'node:crypto';
+import test from 'node:test';
+import { chromium } from 'playwright-core';
+import { startTestServer } from './test-server.mjs';
+
+test('sign up, use a key, switch accounts, and revoke it in the dashboard', async t => {
+  const app = await startTestServer();
+  t.after(app.close);
+  const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : { channel: 'chrome' });
+  t.after(() => browser.close());
+  const page = await browser.newPage({ baseURL: app.origin });
+  page.setDefaultTimeout(8000);
+  const password = randomBytes(24).toString('base64url');
+  const headerLink = name => page.locator('header').getByRole('link', { name, exact: true });
+  const keyPanel = page.getByRole('region', { name: 'API keys', exact: true });
+  const volume = page.getByRole('region', { name: 'Request volume' });
+  const activity = page.getByRole('region', { name: 'Recent key activity' });
+  const quotaAt = used => page.locator(`[role="meter"][aria-label="Monthly quota used"][aria-valuenow="${used}"]`);
+  async function register(email, tryAutofill = false) {
+    await page.getByRole('button', { name: 'Create a free account' }).click();
+    await page.getByLabel('Name', { exact: true }).fill('Fixture');
+    await page.getByLabel('Email', { exact: true }).fill(email);
+    const input = page.getByLabel('Password', { exact: true });
+    if (tryAutofill) {
+      // Password managers can set a value without a keystroke or native minlength check.
+      await input.evaluate(el => { el.value = 'short'; });
+      await page.getByRole('button', { name: 'Create account', exact: true }).click();
+      await page.getByRole('alert').filter({ hasText: /at least 12 characters/i }).waitFor();
+    }
+    await input.fill(password);
+    await page.getByRole('button', { name: 'Create account', exact: true }).click();
+    await page.getByText(email, { exact: true }).waitFor();
+  }
+  async function signOut() {
+    await page.getByRole('button', { name: 'Sign out' }).click();
+    await page.getByRole('heading', { name: 'Sign in' }).waitFor();
+    await headerLink('Sign in').waitFor();
+  }
+  await page.goto('/dashboard');
+  await page.waitForURL('**/sign-in', { timeout: 6000 });
+  await headerLink('Sign in').waitFor();
+  await register('first@example.test', true);
+  await headerLink('Dashboard').waitFor();
+  await page.getByRole('heading', { name: 'Workspace overview' }).waitFor();
+  await quotaAt(0).waitFor();
+  await headerLink('Manage keys').click();
+  await page.waitForURL('**/dashboard#api-keys');
+  assert.equal(await headerLink('Sign in').count(), 0, 'the header reflects the signed-in session');
+  await page.getByLabel('New key name').fill('First account key');
+  await page.getByRole('button', { name: 'Create key' }).click();
+  const revealed = page.locator('pre code').filter({ hasText: /^tk_live_[a-f0-9]+$/ });
+  const key = await revealed.innerText();
+  await page.getByRole('button', { name: 'I have stored it — hide' }).click();
+  assert.equal(await revealed.count(), 0);
+  await page.getByRole('button', { name: 'Show API key' }).click();
+  assert.equal(await revealed.innerText(), key);
+  await page.getByRole('button', { name: 'Hide API key' }).click();
+  assert.equal(await revealed.count(), 0);
+  const useKey = () => page.request.post('/v1/hash', { data: { input: 'sample' }, headers: { 'x-api-key': key } });
+  assert.equal((await useKey()).status(), 200);
+  await page.getByRole('button', { name: 'Refresh usage' }).click();
+  await quotaAt(1).waitFor();
+  await activity.getByText('Last used · First account key', { exact: true }).waitFor();
+  const months = volume.getByRole('group', { name: 'Successful requests by month, UTC' }).getByRole('button');
+  assert.equal(await months.count(), 6);
+  await months.first().click();
+  await volume.getByRole('status').filter({ hasText: '0 requests' }).waitFor();
+  await volume.getByRole('button', { name: 'By key', exact: true }).click();
+  await volume.getByText('First account key', { exact: true }).waitFor();
+  await volume.getByText('1 request', { exact: true }).waitFor();
+  const quickstart = page.getByRole('region', { name: 'Send a request' });
+  await quickstart.getByRole('button', { name: 'PowerShell' }).click();
+  const request = await quickstart.locator('code').last().innerText();
+  assert.ok(request.includes(app.origin + '/v1/slug') && request.includes('$env:TOOLZYNC_KEY') && !request.includes(key));
+  await page.reload();
+  await keyPanel.getByText('First account key', { exact: true }).waitFor();
+  assert.equal(await revealed.count(), 0);
+  await signOut();
+  await register('second@example.test');
+  await quotaAt(0).waitFor();
+  assert.equal(await page.getByText(/First account key/).count(), 0, 'key names and activity are account-scoped');
+  await signOut();
+  await page.getByLabel('Email', { exact: true }).fill('first@example.test');
+  await page.getByLabel('Password', { exact: true }).fill(password);
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await keyPanel.getByText('First account key', { exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Revoke First account key' }).click();
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  assert.equal(await page.getByRole('button', { name: 'Confirm revoke First account key' }).count(), 0);
+  await page.getByRole('button', { name: 'Revoke First account key' }).click();
+  await page.getByRole('button', { name: 'Confirm revoke First account key' }).click();
+  await page.getByText(/^revoked \d{4}-\d{2}-\d{2}$/).waitFor();
+  assert.equal(await page.getByRole('button', { name: 'Revoke First account key' }).count(), 0);
+  assert.equal((await useKey()).status(), 401);
+  await quotaAt(1).waitFor();
+  await activity.getByText('Revoked · First account key', { exact: true }).waitFor();
+  await page.reload();
+  await page.getByText(/^revoked \d{4}-\d{2}-\d{2}$/).waitFor();
+});

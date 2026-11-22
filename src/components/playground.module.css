@@ -1,0 +1,19 @@
+.instrument { overflow: hidden; border-radius: 15px; border: 1px solid #6c8158; background: #141a16; box-shadow: 0 20px 45px -26px #000c, 0 0 0 5px #172019; min-width: 0; }
+.face { position: relative; isolation: isolate; overflow: hidden; padding: 15px 20px 16px; color: #1c2a10; background-color: #c9ee8b; background-image: radial-gradient(#56733645 .7px, transparent .9px); background-size: 5px 5px; }
+.legend { display: flex; align-items: center; gap: 6px; width: fit-content; font: 600 10px/1.5 var(--font-mono); letter-spacing: .09em; }
+.register { font-size: 15px; }
+.face h2 { margin: 6px 0 0; width: fit-content; font: 580 clamp(1.35rem, 2.2vw, 1.85rem)/1.1 var(--font-sans); letter-spacing: -.055em; }
+.signal { position: absolute; z-index: -1; right: -1%; top: 3%; width: 53%; height: 94%; mask-image: linear-gradient(90deg, transparent, black 11%); }
+.scan { fill: #fff; opacity: 0; animation: sweep 960ms var(--ease-out); }
+@keyframes sweep { 0% { transform: translateX(-6px); opacity: 0; } 15%,70% { opacity: .6; } 100% { transform: translateX(278px); opacity: 0; } }
+.switches { display: inline-flex; align-items: center; gap: 2px; }
+.switches button { padding: 6px 11px; border: 1px solid transparent; border-radius: 5px; color: var(--color-muted); font: 500 .75rem/1.25 var(--font-mono); transition: background var(--motion-fast), color var(--motion-fast); }
+.switches button[aria-pressed=true] { background: #283127; color: var(--color-lime); border-color: #46533e; }
+.switches button:hover { color: var(--color-fg); }
+.input { resize: vertical; display: block; min-height: 3rem; max-height: 10rem; font: .79rem/1.5 var(--font-mono); padding: 9px 10px; border-radius: 6px; }
+.run { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 4px; background: var(--color-lime); color: var(--color-ink); font: 600 .72rem/1.2 var(--font-mono); }
+.run:hover { background: #daff7b; }
+.result { display: block; min-height: 5.45rem; max-height: 11rem; overflow: auto; padding: 5px 1px 0; color: #e6eebd; font: .78rem/1.5 var(--font-mono); }
+.print { white-space: pre-wrap; overflow-wrap: anywhere; animation: print 230ms var(--ease-out); }
+@keyframes print { from { opacity: .4; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (max-width: 390px) { .signal { width: 40%; } }

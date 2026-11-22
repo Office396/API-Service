@@ -1,0 +1,52 @@
+{
+  "name": "toolzync",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "auth:setup": "node scripts/setup-auth.mjs",
+    "pretest": "npm run build",
+    "test": "node --test tests/accounts.test.mjs",
+    "test:browser": "node --test tests/account-browser.test.mjs tests/toolkit-browser.test.mjs",
+    "test:dev": "node --test tests/dev-session.test.mjs"
+  },
+  "dependencies": {
+    "better-auth": "1.7.26",
+    "better-sqlite3": "12.11.1",
+    "bowser": "2.15.0",
+    "bwip-js": "4.11.4",
+    "diff": "9.0.0",
+    "fflate": "0.8.3",
+    "heic-convert": "2.1.0",
+    "ipaddr.js": "2.5.0",
+    "markdown-it": "15.0.3",
+    "markdown-it-footnote": "4.0.0",
+    "next": "16.4.6",
+    "pdf-lib": "1.17.1",
+    "re2js": "2.10.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "sanitize-html": "2.18.2",
+    "sharp": "0.35.5",
+    "unpdf": "1.9.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/markdown-it": "14.2.0",
+    "@types/markdown-it-footnote": "3.0.4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/sanitize-html": "2.16.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "playwright-core": "1.65.1",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,83 @@
+Category 1: Document & PDF Tools (Your Anchor)
+HTML/URL to PDF (Your main idea - perfect for invoices/reports)
+Markdown to PDF / HTML (Huge demand from developers and writers)
+Merge / Split PDFs (Combine 5 PDFs into 1, or extract page 3 from a 50-page doc)
+Compress PDF (Reduce file size without losing quality)
+PDF to Text / JSON (Extract data from PDFs using OCR)
+Watermark PDF (Add text or image watermarks to documents)
+Category 2: Image & Media Tools (Highest API Demand)
+Developers constantly need to manipulate images on the fly for their apps.
+youtube videos downloader in many video resolutions
+Convert YouTube to MP3 or any other video formate
+Youtube to MP4 Converter
+Free online video downloader for Vimeo, Dailymotion, Twitter, Tiktok, Instagram, Facebook and any other sites.
+
+7. Website Screenshot API (Takes a URL and returns a PNG/JPG of the site)
+8. Image Format Converter (Crucial: Convert HEIC to JPG, or PNG to WebP for web optimization)
+9. Image Compressor / Resizer (Bulk resize or compress images via API)
+10. QR Code Generator (Generate QR codes with custom colors/logos)
+11. Favicon Generator (Take a logo and output all required favicon sizes for a website)
+12. Metadata (EXIF) Remover (Strip location/camera data from images for privacy)
+Category 3: Developer & Data Utilities
+13. JSON to CSV / XML Converter (Convert data formats on the fly)
+14. Base64 Encoder / Decoder (Encode images or text to Base64 strings)
+15. Hash Generator (Generate MD5, SHA-256, etc., for passwords or file verification)
+16. Email Validator API (Check if an email exists by pinging the MX server, without sending an email)
+17. User-Agent Parser (Take a browser User-Agent string and return the OS, device, and browser name)
+18. IP Geolocation / WHOIS (Get the location or domain owner of an IP/URL)
+Category 4: SEO & Webmaster Tools
+Marketers and website owners will use the web version; agencies will use the API.
+19. XML Sitemap Generator (Crawl a URL and output a sitemap)
+20. Meta Tag / Open Graph Generator (Preview how a link looks on Twitter/Facebook)
+21. UTM Link Builder (Add tracking parameters to URLs for marketing)
+22. Robots.txt Generator (Create rules for search engine crawlers)
+Category 1: Audio & Video Manipulation
+Video and audio processing require server power
+Video to GIF Converter (Extract a 5-second clip and turn it into a looping GIF) - Both
+Audio Format Converter (MP3 to WAV, M4A to MP3, OGG to MP3) - Both
+Extract Audio from Video (Strip the audio track from an MP4 and save as MP3) - Both
+Video Thumbnail Extractor (Pull a frame from a video at a specific timestamp) - API
+Video Compressor (Reduce MP4 file size using FFmpeg without losing much quality) - Both
+Speech-to-Text (Transcription) (Wrapper for OpenAI Whisper API - developers hate setting this up themselves) - API
+Category 2: Text, String & Content Utilities
+These require almost zero server power. You can offer these for free on the web to attract massive SEO traffic.
+7. Case Converter (Convert text to UPPERCASE, lowercase, Title Case, camelCase, snake_case) - Web
+8. Word, Character & Reading Time Counter - Web
+9. Lorem Ipsum Generator (Generate dummy text, but allow custom parameters like "generate 5 paragraphs about technology") - Web
+10. Markdown to HTML / HTML to Markdown - Both
+11. URL Slug Generator (Convert "My Blog Post Title!" to "my-blog-post-title") - Both
+12. Text to Speech (TTS) (Convert text to an MP3 audio file using a cloud voice API) - Both
+13. JSON Formatter & Validator (Beautify messy JSON code) - Web
+Category 3: Advanced Developer Utilities
+These solve specific, annoying problems for programmers.
+14. Cron Expression Generator & Parser (Translates 0 0 * * * into human-readable text, and vice versa) - Both
+15. JWT (JSON Web Token) Decoder (Decode and debug authentication tokens securely) - Web
+16. Fake Data Generator (Mock Data) (Generate 1,000 fake names, emails, addresses, and phone numbers for testing databases) - API
+17. UUID / GUID Generator (Generate bulk unique identifiers) - Both
+18. Regex (Regular Expression) Tester - Web
+19. Color Palette Generator & Converter (Convert HEX to RGB, generate complementary color palettes) - Both
+20. Webhook Tester / Request Inspector (Give developers a temporary URL to test their outgoing webhooks) - API
+Category 4: E-commerce, Marketing & Social Media
+Marketers, dropshippers, and agency owners will use the web version daily.
+21. Dynamic Open Graph (OG) Image Generator (API that takes a blog title and author name, and generates a beautiful Twitter/Facebook preview image automatically) - API (Huge demand for this!)
+22. YouTube Thumbnail Downloader (Paste a YT link, get all thumbnail sizes) - Web
+23. Social Media Image Auto-Cropper (Upload one image, auto-crop it to Instagram Story, Twitter Header, Facebook Post sizes) - Web
+24. Email Signature HTML Generator - Web
+25. UTM Link Builder & Tracker - Web
+26. Barcode Generator (Generate UPC, EAN, Code128 barcodes for product packaging) - Both
+Category 5: Security, Network & Cryptography
+Essential tools for IT professionals and security-conscious developers.
+27. Secure Password Generator (Customizable length, symbols, numbers) - Web
+28. Password Strength Checker (Checks against known breached password databases) - Both
+29. DNS Record Lookup (Check A, CNAME, MX, and TXT records for any domain) - Both
+30. SSL Certificate Checker & Expiry Monitor API (Check if a website's HTTPS certificate is valid and when it expires) - API
+31. CORS Header Tester (Check if a website allows cross-origin requests) - Web
+32. Hash Generator (Generate MD5, SHA-1, SHA-256 hashes for files or text) - Both
+Category 6: AI & "Smart" Wrappers (Premium Pricing)
+You don't need to build the AI yourself. You can use existing AI APIs (like OpenAI, Stability AI, or open-source models) and wrap them in your unified dashboard.
+33. AI Background Remover (Upload a product photo, get a transparent PNG back) - Both
+34. AI Image Upscaler (Take a blurry, low-res image and make it HD) - Both
+35. AI Text Summarizer (Paste a 5,000-word article, get a 3-paragraph summary) - Both
+36. AI Email Rewriter (Turn a rough draft into a professional corporate email) - Web
+37. Smart Image Auto-Tagger (Upload an image, get a list of keywords describing it) - API
+For start i only have these tools we will add more one the website is running 
